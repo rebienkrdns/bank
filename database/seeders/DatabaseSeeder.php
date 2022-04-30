@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use Illuminate\Support\Facades\Hash;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -14,6 +13,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $users = [
+            [
+                "name" => "Primer usuario",
+                "identification" => 1234,
+                "password" => Hash::make(1234)
+            ],
+            [
+                "name" => "Segundo usuario",
+                "identification" => 4321,
+                "password" => Hash::make(4321)
+            ]
+        ];
+        
+        foreach ($users as $item) {
+            \App\Models\User::create($item);
+        }
     }
 }

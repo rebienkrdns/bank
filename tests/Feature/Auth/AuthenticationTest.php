@@ -24,11 +24,23 @@ class AuthenticationTest extends TestCase
 
         $response = $this->post('/iniciar-sesion', [
             'identification' => $user->identification,
-            'password' => 'password',
+            'password' => $user->identification,
         ]);
 
         $this->assertAuthenticated();
         $response->assertRedirect(RouteServiceProvider::HOME);
+    }
+
+    public function test_users_can_not_authenticate_with_invalid_identification()
+    {
+        $user = User::factory()->create();
+
+        $this->post('/iniciar-sesion', [
+            'identification' => 'wrong-identification',
+            'password' => $user->identification,
+        ]);
+
+        $this->assertGuest();
     }
 
     public function test_users_can_not_authenticate_with_invalid_password()
@@ -38,6 +50,16 @@ class AuthenticationTest extends TestCase
         $this->post('/iniciar-sesion', [
             'identification' => $user->identification,
             'password' => 'wrong-password',
+        ]);
+
+        $this->assertGuest();
+    }
+
+    public function test_users_can_not_authenticate_without_credentials()
+    {
+        $this->post('/iniciar-sesion', [
+            'identification' => '',
+            'password' => '',
         ]);
 
         $this->assertGuest();

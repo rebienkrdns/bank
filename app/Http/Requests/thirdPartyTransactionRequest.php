@@ -2,15 +2,12 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Account;
-use App\Models\Transaction;
 use App\Providers\AccountsServiceProvider;
 use App\Providers\TransactionsServiceProvider;
-use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class ownTransactionRequest extends FormRequest
+class thirdPartyTransactionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -53,7 +50,7 @@ class ownTransactionRequest extends FormRequest
         ];
     }
 
-    public function createOwnTransaction()
+    public function createThirdPartyTransaction()
     {
         $data = $this->only('account_origin', 'account_destination', 'transaction');
 
@@ -63,15 +60,9 @@ class ownTransactionRequest extends FormRequest
             ]);
         }
 
-        if (!AccountsServiceProvider::isValidAndEnabledOwnAccount($data["account_destination"])) {
+        if (!AccountsServiceProvider::isValidAndEnabledThirdPartyAccount($data["account_destination"])) {
             throw ValidationException::withMessages([
                 'message' => trans('transactions.account_destination.failed'),
-            ]);
-        }
-
-        if ($data["account_origin"] == $data["account_destination"]) {
-            throw ValidationException::withMessages([
-                'message' => trans('transactions.equal_accounts'),
             ]);
         }
 

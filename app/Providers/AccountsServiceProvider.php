@@ -46,7 +46,7 @@ class AccountsServiceProvider extends ServiceProvider
         )->where([
             ["user_id", Auth::user()->id],
             ["status", "active"]
-        ])->count() == 1;
+        ])->count() <= 1;
     }
 
     public static function listThirdPartyAccounts()
@@ -69,11 +69,20 @@ class AccountsServiceProvider extends ServiceProvider
         ])->count() == 0;
     }
 
-    public static function isValidAndEnabledAccount($account)
+    public static function isValidAndEnabledOwnAccount($account)
     {
         return Account::where([
             ["id", $account],
             ["user_id", Auth::user()->id],
+            ["status", "active"]
+        ])->exists();
+    }
+
+    public static function isValidAndEnabledThirdPartyAccount($account)
+    {
+        return Account::where([
+            ["id", $account],
+            ["user_id", "!=", Auth::user()->id],
             ["status", "active"]
         ])->exists();
     }

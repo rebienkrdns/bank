@@ -22,7 +22,10 @@ Route::get('/', [RootController::class, 'index']);
 Route::middleware(['auth'])->group(function () {
     Route::get('/inicio', [HomeController::class, 'index']);
     Route::get('/transacciones-bancarias', [TransactionsController::class, 'index']);
+    Route::get('/transacciones-bancarias/cuentas-propias', [TransactionsController::class, 'ownTransactions']);
     Route::post('/transacciones-bancarias/cuentas-propias', [TransactionsController::class, 'ownAccountTransaction']);
+    Route::get('/transacciones-bancarias/cuentas-de-terceros', [TransactionsController::class, 'thirdPartyTransactions']);
+    Route::post('/transacciones-bancarias/cuentas-de-terceros', [TransactionsController::class, 'thirdPartyAccountTransaction']);
     Route::get('/estado-de-la-cuenta', [AccountController::class, 'index']);
 });
 

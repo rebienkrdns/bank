@@ -21,44 +21,64 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## Project details
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Proyecto desarrollado con Laravel 9
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Detalles de prerequisitos, instalación, tutoriales y demás información en [https://styde.net/instalacion-de-laravel-9/](https://styde.net/instalacion-de-laravel-9/)
+- Compatible con MySQL 5 y 8
 
-## Laravel Sponsors
+## Execution secuence
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- git clone https://github.com/rebienkrdns/bank.git
+- cd bank
+- composer install
+- crear base de datos
+- copiar archivo .env.example a .env
+- agregar datos para conexión con base de datos en archivo .env
 
-### Premium Partners
+        Datos de ejemplo:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+        DB_CONNECTION=mysql
+        DB_HOST=127.0.0.1
+        DB_PORT=3306
+        DB_DATABASE=bank
+        DB_USERNAME=root
+        DB_PASSWORD=
 
-## Contributing
+- php artisan key:generate
+- php artisan optimize
+- php artisan migrate:refresh --seed, este comando puede ejecutarse las veces que sean necesarias para la creación de cuentas aleatorias
+- php artisan serve, este comando correrá el programa en forma de desarrollo en http://127.0.0.1:8000
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Transactions Logic
 
-## Code of Conduct
+        id  origin      destination     transaction     last-value
+        1   1           null            100000          100000          |add             |
+        2   1           2               -25000          75000           |transference    |
+        3   2           null            25000           25000           |add             |
+        3   1           null            30000           105000          |add             |
+                                                                        |transaction-type|
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+        account     last-value
+        1           105000
+        2           25000
+## Default Credentials
 
-## Security Vulnerabilities
+        Users
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+        identification      password
+        1234                1234
+        4321                4321
 
+        Accounts
+        created ramdonly
+
+        Transactions
+        one default per 1000000 associate with Account 1
+## Visual Database model
+
+database/model.mwb open it with Mysql WorkBench
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

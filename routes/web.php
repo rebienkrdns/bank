@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Bank\AccountController;
+use App\Http\Controllers\Bank\HomeController;
+use App\Http\Controllers\Bank\RootController;
+use App\Http\Controllers\Bank\TransactionsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('bank.root');
+Route::get('/', [RootController::class, 'index']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/inicio', [HomeController::class, 'index']);
+    Route::get('/transacciones-bancarias', [TransactionsController::class, 'index']);
+    Route::post('/transacciones-bancarias/cuentas-propias', [TransactionsController::class, 'ownAccountTransaction']);
+    Route::get('/estado-de-la-cuenta', [AccountController::class, 'index']);
 });
 
-Route::get('/inicio', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Bank\AccountController;
+use App\Http\Controllers\Bank\HomeController;
+use App\Http\Controllers\Bank\RootController;
+use App\Http\Controllers\Bank\TransactionsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +17,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [RootController::class, 'index']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/inicio', [HomeController::class, 'index'])->name('login');
+    Route::get('/transacciones-bancarias', [TransactionsController::class, 'index']);
+    Route::get('/transacciones-bancarias/cuentas-propias', [TransactionsController::class, 'ownTransactions']);
+    Route::post('/transacciones-bancarias/cuentas-propias', [TransactionsController::class, 'ownAccountTransaction']);
+    Route::get('/transacciones-bancarias/cuentas-de-terceros', [TransactionsController::class, 'thirdPartyTransactions']);
+    Route::post('/transacciones-bancarias/cuentas-de-terceros', [TransactionsController::class, 'thirdPartyAccountTransaction']);
+    Route::get('/estado-de-la-cuenta', [AccountController::class, 'index']);
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -18,10 +18,14 @@
                         @foreach($transactions as $item)
                         <tr>
                             <td>{{ $item->id }}</td>
-                            <td>{{ $item->created_at }}</td>
+                            <td>{{ \Carbon\Carbon::parse($item->created_at)->locale("es_CO") }}</td>
                             <td>{{ $item->origin }}</td>
-                            <td>{{ $item->destination }}</td>
-                            <td>{{ $item->value }}</td>
+                            <td>{{ is_null($item->destination) ? "No aplica" : $item->destination }}</td>
+                            @if(is_null($item->destination))
+                            <td class="text-success">{{ $item->value }}</td>
+                            @else
+                            <td class="text-danger">-{{ $item->value }}</td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

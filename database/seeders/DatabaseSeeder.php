@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Account;
+use App\Models\Transaction;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -49,5 +50,12 @@ class DatabaseSeeder extends Seeder
                 $count++;
             }
         }
+
+        Transaction::create([
+            "account_id_origin" => 1,
+            "transaction" => 1000000,
+            "value" => 1000000,
+            "created_at" => Carbon::now()
+        ]);
     }
 }

@@ -15,7 +15,9 @@
     <link href="{{asset('css/plugins.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('css/form-2.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('css/custom-loader.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('css/infobox.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/custom-modal.css')}}" rel="stylesheet" type="text/css">
+    <link href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+    <script src="{{asset('js/jquery-3.1.1.min.js')}}"></script>
 </head>
 
 <body class="font-sans antialiased">
@@ -28,9 +30,9 @@
     </div>
 
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{asset('js/jquery-3.1.1.min.js')}}"></script>
     <script src="{{asset('js/popper.min.js')}}"></script>
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
+    <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 </body>
 
 </html>

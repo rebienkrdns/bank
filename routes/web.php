@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [RootController::class, 'index']);
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/inicio', [HomeController::class, 'index']);
+    Route::get('/inicio', [HomeController::class, 'index'])->name('login');
     Route::get('/transacciones-bancarias', [TransactionsController::class, 'index']);
     Route::get('/transacciones-bancarias/cuentas-propias', [TransactionsController::class, 'ownTransactions']);
     Route::post('/transacciones-bancarias/cuentas-propias', [TransactionsController::class, 'ownAccountTransaction']);

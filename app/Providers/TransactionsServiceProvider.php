@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Transaction;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
 class TransactionsServiceProvider extends ServiceProvider
@@ -80,5 +81,15 @@ class TransactionsServiceProvider extends ServiceProvider
         $code = str_pad($destinationTransaction->id, 5, "0", STR_PAD_LEFT);
 
         return $code;
+    }
+
+    public static function all()
+    {
+        return Transaction::select(
+            "transactions.id",
+            DB::raw("(SELECT account FROM accounts WHERE accounts.id = account_id_origin) as origin"),
+            DB::raw("(SELECT account FROM accounts WHERE accounts.id = account_id_destination) as destination"),
+            "value"
+        )->get();
     }
 }

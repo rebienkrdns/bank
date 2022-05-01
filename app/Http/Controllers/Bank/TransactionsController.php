@@ -6,12 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ownTransactionRequest;
 use App\Http\Requests\thirdPartyTransactionRequest;
 use App\Providers\AccountsServiceProvider;
+use App\Providers\TransactionsServiceProvider;
 
 class TransactionsController extends Controller
 {
     public function index()
     {
-        return view('bank.transactions');
+        $transactions = TransactionsServiceProvider::all();
+        
+        return view('bank.transactions')
+        ->with("transactions", $transactions);
     }
 
     public function ownTransactions()
